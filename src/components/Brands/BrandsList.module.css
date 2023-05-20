@@ -1,0 +1,4 @@
+.image-hover {
+  transition: transform 0.4s;
+  mix-blend-mode: multiply;
+}
