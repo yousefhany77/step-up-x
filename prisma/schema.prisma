@@ -7,95 +7,98 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Image {
+// model Image {
+//   id        String   @id @default(uuid())
+//   original  String
+//   small     String
+//   thumbnail String
+//   extraImg  String[]
+//   view_360  String[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime
+//   Sneaker   Sneaker?
+//   Variant   Variant?
+// }
+
+// model Sneaker {
+//   pid         String    @id @default(uuid())
+//   brand       Brand
+//   gender      Gender
+//   name        String    @db.VarChar(512)
+//   description String?
+//   discount    Decimal?  @db.Decimal(5, 2)
+//   sizes       Int[]
+//   sku         String    @unique
+//   releaseDate DateTime
+//   price       Decimal   @db.Decimal(5, 2)
+//   silhouette  String
+//   imagesId    String    @unique
+//   colorway    String
+//   createdAt   DateTime  @default(now())
+//   updatedAt   DateTime
+//   Image       Image     @relation(fields: [imagesId], references: [id])
+//   Variant     Variant[]
+//   Orders      Orders?   @relation(fields: [ordersId], references: [id])
+//   ordersId    String?
+
+//   @@index([brand])
+//   @@index([colorway])
+//   @@index([gender])
+//   @@index([name, brand, silhouette], map: "name_brand_silhouette")
+// }
+
+// model Variant {
+//   id           String   @id @default(uuid())
+//   colorway     String
+//   sneakerPid   String
+//   variantImgId String   @unique
+//   sku          String   @unique
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime
+//   sizes        Int[]
+//   has360View   Boolean  @default(false)
+//   price        Decimal? @db.Decimal(10, 2)
+//   name         String?  @db.VarChar(512)
+//   discount     Decimal? @db.Decimal(5, 2)
+//   Sneaker      Sneaker  @relation(fields: [sneakerPid], references: [pid])
+//   Image        Image    @relation(fields: [variantImgId], references: [id])
+
+//   @@unique([sku, colorway])
+//   @@index([colorway], map: "colorway")
+// }
+
+model Orders {
+  id            String        @id @default(uuid())
+  paymentId     String        @unique
+  OrderItem     OrderItem[]
+  customerId    String
+  customerEmail String
+  customerName  String
+  address       String?
+  customerPhone String?
+  shippintStatus String?  @default("pending")
+  paymentStatus paymentStatus
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([customerId])
+}
+
+model OrderItem {
   id        String   @id @default(uuid())
-  original  String
-  small     String
-  thumbnail String
-  extraImg  String[]
-  view_360  String[]
+  SneakerId String
+  orderId   String
+  size      Int
+  quantity  Int
+  price     Decimal
+  discount  Decimal?
+  variantId String?
+  Orders    Orders   @relation(fields: [orderId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime
-  Sneaker   Sneaker?
-  Variant   Variant?
+  updatedAt DateTime @updatedAt
 }
 
-model Sneaker {
-  pid         String    @id @default(uuid())
-  brand       Brand
-  gender      Gender
-  name        String    @db.VarChar(512)
-  description String?
-  discount    Decimal?  @db.Decimal(5, 2)
-  sizes       Int[]
-  sku         String    @unique
-  releaseDate DateTime
-  price       Decimal   @db.Decimal(5, 2)
-  silhouette  String
-  imagesId    String    @unique
-  colorway    String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime
-  Image       Image     @relation(fields: [imagesId], references: [id])
-  Variant     Variant[]
-
-  @@index([brand])
-  @@index([colorway])
-  @@index([gender])
-  @@index([name, brand, silhouette], map: "name_brand_silhouette")
-}
-
-model Variant {
-  id           String   @id @default(uuid())
-  colorway     String
-  sneakerPid   String
-  variantImgId String   @unique
-  sku          String   @unique
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime
-  sizes        Int[]
-  has360View   Boolean  @default(false)
-  price        Decimal? @db.Decimal(10, 2)
-  name         String?  @db.VarChar(512)
-  discount     Decimal? @db.Decimal(5, 2)
-  Sneaker      Sneaker  @relation(fields: [sneakerPid], references: [pid])
-  Image        Image    @relation(fields: [variantImgId], references: [id])
-
-  @@unique([sku, colorway])
-  @@index([colorway], map: "colorway")
-}
-
-enum Brand {
-  adidas
-  alexander_mcqueen
-  balenciaga
-  chanel
-  converse
-  crocs
-  dior
-  gucci
-  jordan
-  louis_vuitton
-  new_balance
-  nike
-  off_white
-  on
-  prada
-  puma
-  reebok
-  under_armour
-  vans
-  versace
-  yeezy
-}
-
-enum Gender {
-  youth
-  toddler
-  infant
-  men
-  women
-  preschool
-  child
-  unisex
+enum paymentStatus {
+  paid
+  unpaid
 }

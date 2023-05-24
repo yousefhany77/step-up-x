@@ -16,10 +16,10 @@ export interface contentfulProduct {
   pid: string
   title: string
   price: number
-  gender: string
-  brand: string
+  gender: Gender
+  brand: Brand
   colorway: string
-  size: number[]
+  sizes: number[]
   variants?: {
     fields: Omit<contentfulProduct, 'variants'>
   }[]
@@ -32,4 +32,39 @@ export interface contentfulProduct {
   thumbnail: {
     fields: contentfulFile
   }
+}
+
+export enum Brand {
+  adidas = 'adidas',
+  alexander_mcqueen = 'alexander_mcqueen',
+  balenciaga = 'balenciaga',
+  chanel = 'chanel',
+  converse = 'converse',
+  crocs = 'crocs',
+  dior = 'dior',
+  gucci = 'gucci',
+  jordan = 'jordan',
+  louis_vuitton = 'louis_vuitton',
+  new_balance = 'new_balance',
+  nike = 'nike',
+  off_white = 'off_white',
+  on = 'on',
+  prada = 'prada',
+  puma = 'puma',
+  reebok = 'reebok',
+  under_armour = 'under_armour',
+  vans = 'vans',
+  versace = 'versace',
+  yeezy = 'yeezy',
+}
+
+export enum Gender {
+  youth = 'youth',
+  toddler = 'toddler',
+  infant = 'infant',
+  men = 'men',
+  women = 'women',
+  preschool = 'preschool',
+  child = 'child',
+  unisex = 'unisex',
 }

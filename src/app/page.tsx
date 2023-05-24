@@ -1,13 +1,10 @@
-'use client'
-import { Button } from '@mantine/core'
-import { FC } from 'react'
+//app/page.tsx
+import { UserButton } from '@clerk/nextjs'
 
-const page: FC = ({}) => {
+export default function Home() {
   return (
     <div>
-      <Button>Button</Button>
+      <UserButton afterSignOutUrl='/' />
     </div>
   )
 }
-
-export default page

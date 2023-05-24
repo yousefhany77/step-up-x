@@ -1,13 +1,30 @@
 'use client'
 import { useCart } from '@/lib/hooks/useCart'
-import { ActionIcon, Badge, Drawer } from '@mantine/core'
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Drawer,
+  Group,
+  ScrollArea,
+  Text,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { notifications } from '@mantine/notifications'
 import { IconShoppingCart } from '@tabler/icons-react'
+import { useMemo, useState } from 'react'
 import CartItem from './cartItem'
 
 function Cart() {
   const [opened, { open, close }] = useDisclosure(false)
+  const [loading, setLoading] = useState(false)
   const { items } = useCart()
+
+  const total = useMemo(() => {
+    return items.reduce((acc, item) => {
+      return acc + item.quantity * item.price
+    }, 0)
+  }, [items])
 
   return (
     <>
@@ -20,11 +37,82 @@ function Cart() {
           opacity: 0.15,
           blur: 3,
         }}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
         position='right'
       >
-        {items.map((item) => (
-          <CartItem key={item.cartItemId} item={item} />
-        ))}
+        <ScrollArea.Autosize
+          mah={'75vh'}
+          sx={(theme) => ({
+            paddingBottom: theme.spacing.md,
+            flex: 1,
+          })}
+        >
+          {items.length === 0 && (
+            <Text
+              sx={{
+                textAlign: 'center',
+                marginBlock: '2rem',
+                color: 'gray',
+              }}
+            >
+              Your cart is empty
+            </Text>
+          )}
+          {items.map((item) => (
+            <CartItem key={item.cartItemId} item={item} />
+          ))}
+        </ScrollArea.Autosize>
+        {items.length > 0 && (
+          <Group
+            sx={{
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text p={'sm'} my={'md'} weight={500} size='lg'>
+              Total
+            </Text>
+            <Text p={'sm'} my={'md'} weight={600} size='xl'>
+              ${total}
+            </Text>
+          </Group>
+        )}
+        <Button
+          loading={loading}
+          disabled={loading || items.length === 0}
+          onClick={async () => {
+            try {
+              setLoading(true)
+              const res = await fetch('/api/stripe/checkout', {
+                method: 'POST',
+                body: JSON.stringify({ items }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+              const { url } = await res.json()
+              localStorage.removeItem('cart')
+              window.location.assign(url)
+            } catch (error) {
+              let message = 'Something went wrong'
+              if (error instanceof Error) {
+                message = error.message
+              }
+              notifications.show({
+                title: 'Error',
+                message: message,
+                color: 'red',
+              })
+            }
+          }}
+          fullWidth
+          variant='light'
+          size='md'
+        >
+          Continue to payment
+        </Button>
       </Drawer>
       <ActionIcon
         variant='light'

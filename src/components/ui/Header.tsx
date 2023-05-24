@@ -1,5 +1,7 @@
+import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 import Cart from '@components/cart'
 import {
+  Button,
   Container,
   Group,
   Header as MantineHeader,
@@ -32,6 +34,12 @@ function Header() {
           <Link href='/'>Home</Link>
           <Link href='/brands'>Brands</Link>
           <Space />
+          <UserButton afterSignOutUrl='/' signInUrl='/sign-in' />
+          <SignedOut>
+            <Button component={SignInButton} variant='outline'>
+              Sign in
+            </Button>
+          </SignedOut>
           <Cart />
         </Group>
       </Container>

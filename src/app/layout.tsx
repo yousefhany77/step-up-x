@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import RootStyleRegistry from './emotion'
 
 export const metadata = {
@@ -11,10 +12,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en'>
-      <body>
-        <RootStyleRegistry>{children}</RootStyleRegistry>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang='en'>
+        <body>
+          <RootStyleRegistry>{children}</RootStyleRegistry>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

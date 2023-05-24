@@ -47,8 +47,8 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
 
     addToCart({
       cartItemId: `${product.pid}${
-        variantId ? `-${variantId}` : ''
-      }  -${selectedSize}`,
+        variantId ? `/${variantId}` : ''
+      }/${selectedSize}`,
       id: product.pid,
       price: currentProduct.price,
       title: currentProduct.title,
@@ -173,7 +173,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
             <Text component='p' size={'xl'} weight={500} w={'100%'}>
               Pick your size
             </Text>
-            {currentProduct?.sizes.length ? (
+            {currentProduct?.sizes?.length ? (
               currentProduct?.sizes.map((size, index) => (
                 <Badge
                   key={`${currentProduct.title} - ${index}-${size}`}
@@ -216,7 +216,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
               value={quantity}
               onChange={(value) => setQuantity(value ? value : 1)}
               variant='filled'
-              disabled={!currentProduct.sizes.length}
+              disabled={!currentProduct?.sizes?.length}
             />
           </Group>
           <Group mt='md' mb='sm'>
@@ -227,7 +227,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
               fullWidth
               size='lg'
               radius='xl'
-              disabled={!currentProduct.sizes.length}
+              disabled={!currentProduct?.sizes?.length}
             >
               Add to Cart
             </Button>
