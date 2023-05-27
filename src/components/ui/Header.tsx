@@ -1,5 +1,7 @@
-import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignInButton, SignedOut } from '@clerk/nextjs'
+import UserIcon from '@components/Header/UserIcon'
 import Cart from '@components/cart'
+
 import {
   Button,
   Container,
@@ -29,12 +31,12 @@ function Header() {
           justifyContent: 'space-between',
         }}
       >
-        <Title order={3}>StepUp X</Title>
+        <Title order={3}>§</Title>
         <Group spacing={'xl'}>
           <Link href='/'>Home</Link>
           <Link href='/brands'>Brands</Link>
           <Space />
-          <UserButton afterSignOutUrl='/' signInUrl='/sign-in' />
+          <UserIcon />
           <SignedOut>
             <Button component={SignInButton} variant='outline'>
               Sign in

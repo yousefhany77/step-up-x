@@ -1,0 +1,15 @@
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1; /* Set the opacity to 1 at the beginning of the animation */
+  }
+  50% {
+    opacity: 0.5; /* Set the opacity to 0.5 in the middle of the animation */
+  }
+  100% {
+    opacity: 1; /* Set the opacity back to 1 at the end of the animation */
+  }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.5s ease infinite;
+}

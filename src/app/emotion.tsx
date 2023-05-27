@@ -46,7 +46,7 @@ export default function RootStyleRegistry({
               fontFamily: 'Roboto, sans-serif',
             },
             'h1,h2,h3,h4,h5,h6': {
-              color: '#18191a !important',
+              color: '#18191a',
             },
             a: {
               color: 'inherit',

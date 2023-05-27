@@ -1,17 +1,19 @@
-'use client'
-import { Box } from '@mantine/core'
+import FilterByBrand from './Filters/Brands/Index'
 
 function Filters() {
   return (
-    <Box
-      sx={(theme) => ({
-        width: '100%',
-        height: '100%',
-        backgroundColor: theme.colors.gray[2],
-      })}
-    >
-      Filters
-    </Box>
+    <>
+      <h3
+        style={{
+          fontSize: '1.5rem',
+          fontWeight: 600,
+        }}
+      >
+        Filters
+      </h3>
+      {/* @ts-expect-error Async Server Component */}
+      <FilterByBrand />
+    </>
   )
 }
 

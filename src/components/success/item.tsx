@@ -1,6 +1,6 @@
 import { getProductById } from '@/lib/products'
-import SuccessOrderItemCard from './card'
 import { Sx } from '@mantine/core'
+import SuccessOrderItemCard from './card'
 
 interface SuccessOrderItemProps {
   id: string
@@ -25,6 +25,7 @@ const SuccessOrderItem = async ({
   if (!product) {
     return <div>Product not found</div>
   }
+  const url = encodeURI(`${product.title.replaceAll(' ', '-')}/${product.pid}`)
   if (variant) {
     return (
       <SuccessOrderItemCard
@@ -34,6 +35,7 @@ const SuccessOrderItem = async ({
         quantity={quantity}
         size={size}
         styles={styles}
+        url={url}
       />
     )
   }
@@ -45,6 +47,7 @@ const SuccessOrderItem = async ({
       quantity={quantity}
       size={size}
       styles={styles}
+      url={url}
     />
   )
 }

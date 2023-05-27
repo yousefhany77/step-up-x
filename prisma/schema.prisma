@@ -68,18 +68,18 @@ datasource db {
 // }
 
 model Orders {
-  id            String        @id @default(uuid())
-  paymentId     String        @unique
-  OrderItem     OrderItem[]
-  customerId    String
-  customerEmail String
-  customerName  String
-  address       String?
-  customerPhone String?
-  shippintStatus String?  @default("pending")
-  paymentStatus paymentStatus
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id             String          @id @default(uuid())
+  paymentId      String          @unique
+  OrderItem      OrderItem[]
+  customerId     String
+  customerEmail  String
+  customerName   String
+  address        String?
+  customerPhone  String?
+  shippingStatus ShippingStatus @default(pending)
+  paymentStatus  paymentStatus
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@index([customerId])
 }
@@ -101,4 +101,10 @@ model OrderItem {
 enum paymentStatus {
   paid
   unpaid
+}
+
+enum ShippingStatus {
+  pending
+  shipped
+  delivered
 }

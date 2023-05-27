@@ -1,3 +1,4 @@
+'use client'
 import NextImage, { ImageProps } from 'next/image'
 import React, { FC } from 'react'
 import placeholderImage from '../../public/placeholder.png'

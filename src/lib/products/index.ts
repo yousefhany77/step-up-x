@@ -91,7 +91,6 @@ export const listProduct = cache(async (filters?: Filters) => {
   })
 
   const data = items.map(enhanceContentfulProduct)
-  console.log('🚀 ~ file: index.ts:86 ~ listProduct ~ data:', data[0].variants)
 
   return data
 })

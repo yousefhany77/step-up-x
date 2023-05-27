@@ -6,14 +6,15 @@ import Image from '@components/Image'
 import {
   Avatar,
   Badge,
+  Box,
   Button,
   Container,
-  Grid,
   Group,
   Modal,
   NumberInput,
   Text,
   Title,
+  useMantineTheme,
 } from '@mantine/core'
 
 import { useCart } from '@/lib/hooks/useCart'
@@ -28,13 +29,12 @@ interface ProductDetailsProps {
 
 const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
   const [index, setIndex] = useState(0)
-  product.sizes = product.sizes.sort((a, b) => a - b)
   const { currentProduct } = useVariantProduct({ index, product })
   const [opened, { open, close }] = useDisclosure(false)
   const [quantity, setQuantity] = useState(1)
   const [selectedSize, setSelectedSize] = useState<number>()
   const { addToCart } = useCart()
-
+  const theme = useMantineTheme()
   const handleAddToCart = () => {
     if (!selectedSize)
       return notifications.show({
@@ -80,19 +80,26 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
           <View360 images={product.view_360} />
         </Modal>
       ) : null}
-      <Grid
-        sx={{
+      <div
+        style={{
           maxWidth: '100%',
           height: '100%',
           margin: '0 auto !important',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(12, 1fr)',
+          gap: '1.5rem',
         }}
-        columns={12}
-        gutter={2}
-        gutterXs='md'
-        gutterMd='xl'
-        gutterXl={50}
       >
-        <Grid.Col key='Grid-col-1-product-Image' span={8} pos={'relative'}>
+        <div
+          key='Grid-col-1-product-Image'
+          style={{
+            gridColumn: '1 / 9',
+            position: 'relative',
+            backgroundColor: 'white',
+            borderRadius: theme.radius.lg,
+            overflow: 'hidden',
+          }}
+        >
           {product?.view_360?.length ? (
             <Badge
               onClick={open}
@@ -115,23 +122,22 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
             fill
             priority
             style={{
-              objectFit: 'contain',
-              mixBlendMode: 'darken',
+              objectFit: 'cover',
             }}
             alt={product.title}
           />
-        </Grid.Col>
+        </div>
 
-        <Grid.Col
+        <Box
           key='Grid-col-2-product-Detail'
-          span={4}
-          sx={(theme) => ({
+          sx={{
             display: 'flex',
             flexDirection: 'column',
             backgroundColor: 'white',
             borderRadius: theme.radius.lg,
             padding: '2.2rem !important',
-          })}
+            gridColumn: '9 / 13',
+          }}
         >
           <Title fw={700} order={1}>
             {currentProduct.title}
@@ -232,8 +238,8 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
               Add to Cart
             </Button>
           </Group>
-        </Grid.Col>
-      </Grid>
+        </Box>
+      </div>
     </Container>
   )
 }
@@ -256,7 +262,6 @@ const ProductVariantIcon = ({
     alt={alt}
     size={'4rem'}
     radius={'xl'}
-    p={'sm'}
     onClick={onClick}
     sx={(theme) => ({
       borderColor: selected ? theme.colors.blue[3] : 'transparent',

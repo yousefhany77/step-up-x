@@ -1,8 +1,11 @@
 'use client'
 
 import Image from '@components/Image'
-import { Box, Group, Sx, Text, Title } from '@mantine/core'
+import { ActionIcon, Box, Group, Sx, Text, Title, Tooltip } from '@mantine/core'
+import { IconArrowsDiagonal } from '@tabler/icons-react'
+import Link from 'next/link'
 import { FC } from 'react'
+import { UrlObject } from 'url'
 
 interface Item {
   title: string
@@ -10,6 +13,7 @@ interface Item {
   quantity: number
   size: number
   thumbnail: string
+  url: string
   styles?: Sx
 }
 
@@ -19,12 +23,14 @@ const SuccessOrderItemCard: FC<Item> = ({
   size,
   thumbnail,
   title,
+  url,
   styles,
 }) => {
   return (
     <Group
       align='flex-start'
       pr={'lg'}
+      pos={'relative'}
       spacing={'md'}
       sx={(theme) => ({
         textAlign: 'left',
@@ -33,6 +39,20 @@ const SuccessOrderItemCard: FC<Item> = ({
         ...styles,
       })}
     >
+      <Tooltip label="View item's details" withArrow position='top'>
+        <ActionIcon
+          pos={'absolute'}
+          top={'5%'}
+          right={'5%'}
+          radius={'50%'}
+          size={'md'}
+          component={Link}
+          // this is a hack to make the type safe link work, till it's compatible with mantine
+          href={`/${url}` as unknown as UrlObject}
+        >
+          <IconArrowsDiagonal size={16} />
+        </ActionIcon>
+      </Tooltip>
       <Image
         alt={title}
         src={thumbnail}
@@ -51,7 +71,9 @@ const SuccessOrderItemCard: FC<Item> = ({
           marginTop: '2rem',
         }}
       >
-        <Title order={4}>{title}</Title>
+        <Title lineClamp={1} order={4}>
+          {title}
+        </Title>
         <Text size={'sm'} weight={500}>
           Size: {size}
         </Text>

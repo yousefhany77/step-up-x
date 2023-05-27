@@ -13,7 +13,12 @@ export default function Page() {
           },
         },
       }}
-      afterSignInUrl={'/brands'}
+      path='/sign-in'
+      routing='path'
+      signUpUrl='/sign-up'
+      afterSignInUrl={'/'}
+      afterSignUpUrl={'/'}
+      redirectUrl={'/'}
     />
   )
 }

@@ -3,8 +3,17 @@ import { Product, Variant } from '@/lib/products'
 import { kFormatter } from '@/lib/util/kFormatter'
 import Image from '@components/Image'
 import { Carousel } from '@mantine/carousel'
-import { Badge, Button, Card, Group, Rating, Text } from '@mantine/core'
+import {
+  Badge,
+  Button,
+  Card,
+  Group,
+  Rating,
+  Text,
+  useMantineTheme,
+} from '@mantine/core'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { FC, useEffect, useState } from 'react'
 
 interface ProductCardProps {
@@ -15,15 +24,20 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [currentProduct, setCurrentProduct] = useState<Variant | Product>(
     product
   )
+  const router = useRouter()
   const [index, setIndex] = useState(0)
   const url = encodeURI(`${product.title.replaceAll(' ', '-')}/${product.pid}`)
-  const addToCardHandler = () => {
-    return console.log('add to Cart %s', 'product')
+  const theme = useMantineTheme()
+  const viewProduct = () => {
+    return router.push(`/${url}`)
   }
 
   const handleLink = (e: React.MouseEvent<HTMLAnchorElement>) => {
     //  this is prevent the navigation if the user clicks on the carousel controllers
-    if (e.target instanceof Element && e.target.tagName === 'svg') {
+    if (
+      e.target instanceof Element &&
+      (e.target.tagName === 'button' || e.target.tagName === 'svg')
+    ) {
       e.preventDefault()
     }
   }
@@ -72,7 +86,20 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       >
         <Card.Section>
           {product.variants?.length ? (
-            <Carousel onSlideChange={(index) => setIndex(index)} loop>
+            <Carousel
+              styles={{
+                control: {
+                  transition: `all 200ms ${theme.transitionTimingFunction}`,
+                  width: 30,
+                  height: 30,
+                  '&:hover': {
+                    backgroundColor: theme.colors.gray[6],
+                  },
+                },
+              }}
+              onSlideChange={(index) => setIndex(index)}
+              loop
+            >
               <>
                 <Carousel.Slide
                   key={product.pid + '-main'}
@@ -88,6 +115,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
                     width={250}
                     style={{
                       objectFit: 'contain',
+                      borderRadius: theme.radius.lg,
                     }}
                     alt={product.title}
                   />
@@ -109,6 +137,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
                     alt={title}
                     style={{
                       objectFit: 'contain',
+                      borderRadius: theme.radius.lg,
                     }}
                   />
                 </Carousel.Slide>
@@ -123,13 +152,16 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
                 objectFit: 'contain',
                 display: 'block',
                 margin: '0 auto',
+                borderRadius: theme.radius.lg,
               }}
               alt={product.title}
             />
           )}
         </Card.Section>
 
-        <Text weight={500}>{currentProduct.title}</Text>
+        <Text mt={'md'} weight={500}>
+          {currentProduct.title}
+        </Text>
         <Text
           sx={(theme) => ({
             fontSize: '0.9rem',
@@ -191,10 +223,9 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         radius='md'
         mt='md'
         disabled={!product.sizes.length}
-        className='add-to-cart'
-        onClick={addToCardHandler}
+        onClick={viewProduct}
       >
-        {product.sizes.length ? 'Add To Cart' : 'Out of Stock'}
+        {product.sizes.length ? 'View' : 'Out of Stock'}
       </Button>
     </Card>
   )

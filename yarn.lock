@@ -299,7 +299,7 @@
 
 "@mantine/carousel@^6.0.11":
   version "6.0.11"
-  resolved "https://registry.npmjs.org/@mantine/carousel/-/carousel-6.0.11.tgz"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-6.0.11.tgz#f503696bb83eac276ec7fc80b3b28f516392a8ee"
   integrity sha512-QKY0f96eFmRGsHcztp+qdPjsjx3rtXLGBzY9e5AmzBSYWRm30tZHVLISz5vcuMkJ3QtQwCAye69/hgjNYpvyPQ==
   dependencies:
     "@mantine/utils" "6.0.11"
@@ -1467,16 +1467,16 @@ duplexer2@^0.1.2:
   dependencies:
     readable-stream "^2.0.2"
 
-embla-carousel-react@^7.0.0:
+embla-carousel-react@7.1.0:
   version "7.1.0"
-  resolved "https://registry.npmjs.org/embla-carousel-react/-/embla-carousel-react-7.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.1.0.tgz#e716f4df7fd31f7ca3e59a3e011158167bc3c468"
   integrity sha512-tbYRPRZSDNd2QLNqYDcArAakGIxtUbhS7tkP0dGXktXHGgcX+3ji3VrOUTOftBiujZrMV8kRxtrRUe/1soloIQ==
   dependencies:
     embla-carousel "7.1.0"
 
 embla-carousel@7.1.0:
   version "7.1.0"
-  resolved "https://registry.npmjs.org/embla-carousel/-/embla-carousel-7.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.1.0.tgz#c770dd3ade9285a97f5e3b6bbf705bc35ec0f9b5"
   integrity sha512-Bh8Pa8NWzgugLkf8sAGexQlBCNDFaej5BXiKgQdRJ1mUC9NWBrw9Z23YVPVGkguWoz5LMjZXXFVGCobl3UPt/Q==
 
 emoji-regex@^9.2.2:
