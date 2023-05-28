@@ -132,3 +132,35 @@ export type Variant = {
   price: number
   title: string
 }
+
+/**
+ * Home page
+ */
+
+export const getHomePage = cache(async () => {
+  const { items } = await client.getEntries({
+    content_type: 'homePage',
+    include: 2,
+  })
+  if (!items.length) return
+  const { fields } = items[0]
+  const featured = fields?.featured as Entry<
+    EntrySkeletonType,
+    undefined,
+    string
+  >[]
+  const heroImage = fields.heroImg as unknown as {
+    fields: contentfulFile
+  }
+  const herSection = {
+    title: fields.heroText?.toString(),
+    heroImage: `https:${heroImage.fields.file.url}`,
+    cta: fields.cta?.toString(),
+  }
+
+  const featuredProducts = featured.map(enhanceContentfulProduct)
+  return {
+    herSection,
+    featuredProducts,
+  }
+})

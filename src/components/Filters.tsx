@@ -9,7 +9,7 @@ function Filters() {
           fontWeight: 600,
         }}
       >
-        Filters
+        Brands
       </h3>
       {/* @ts-expect-error Async Server Component */}
       <FilterByBrand />

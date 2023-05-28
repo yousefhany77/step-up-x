@@ -65,6 +65,14 @@ export default function RootStyleRegistry({
             <AppShell
               padding='md'
               header={<Header />}
+              footer={
+                <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                  © {new Date().getFullYear()}{' '}
+                  <a href='http://youssefhany.dev' target='_blank'>
+                    youssefhany.dev
+                  </a>
+                </div>
+              }
               styles={(theme) => ({
                 root: {
                   '*': {

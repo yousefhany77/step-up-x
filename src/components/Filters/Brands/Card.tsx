@@ -16,11 +16,11 @@ const Card: FC<CardProps> = ({ logo, name, slug }) => {
         display: 'block',
         cursor: 'pointer',
         aspectRatio: '1/1',
-        width: '10rem',
+        width: '7rem',
         backgroundColor: 'white',
         borderRadius: '50%',
         overflow: 'hidden',
-        padding: '2rem',
+        padding: '1rem',
       }}
     >
       <Image

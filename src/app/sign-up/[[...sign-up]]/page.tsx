@@ -1,14 +1,18 @@
 import { SignUp } from '@clerk/nextjs'
 
-export default function Page() {
+export default function Page({
+  searchParams: { redirectUrl },
+}: {
+  searchParams: { redirectUrl?: string }
+}) {
   return (
     <SignUp
-      afterSignInUrl={'/'}
-      afterSignUpUrl={'/'}
-      redirectUrl={'/'}
       path='/sign-up'
       routing='path'
       signInUrl='/sign-in'
+      afterSignInUrl={redirectUrl || '/'}
+      afterSignUpUrl={redirectUrl || '/'}
+      redirectUrl={redirectUrl}
       appearance={{
         elements: {
           card: {

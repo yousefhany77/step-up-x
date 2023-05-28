@@ -2,7 +2,6 @@
 import useVariantProduct from '@/lib/hooks/useVariantProduct'
 import { Product } from '@/lib/products'
 import Image from '@components/Image'
-
 import {
   Avatar,
   Badge,
@@ -16,6 +15,7 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core'
+import styles from './productDetails.module.css'
 
 import { useCart } from '@/lib/hooks/useCart'
 import { useDisclosure } from '@mantine/hooks'
@@ -81,19 +81,19 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
         </Modal>
       ) : null}
       <div
+        className={styles['responsive-grid']}
         style={{
           maxWidth: '100%',
           height: '100%',
           margin: '0 auto !important',
           display: 'grid',
-          gridTemplateColumns: 'repeat(12, 1fr)',
           gap: '1.5rem',
         }}
       >
         <div
           key='Grid-col-1-product-Image'
+          className={styles['responsive-grid-col-1']}
           style={{
-            gridColumn: '1 / 9',
             position: 'relative',
             backgroundColor: 'white',
             borderRadius: theme.radius.lg,
@@ -121,22 +121,19 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
             src={currentProduct.images[0]}
             fill
             priority
-            style={{
-              objectFit: 'cover',
-            }}
             alt={product.title}
           />
         </div>
 
         <Box
           key='Grid-col-2-product-Detail'
+          className={styles['responsive-grid-col-2']}
           sx={{
             display: 'flex',
             flexDirection: 'column',
             backgroundColor: 'white',
             borderRadius: theme.radius.lg,
             padding: '2.2rem !important',
-            gridColumn: '9 / 13',
           }}
         >
           <Title fw={700} order={1}>

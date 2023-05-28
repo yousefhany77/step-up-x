@@ -3,6 +3,7 @@ import { useCart } from '@/lib/hooks/useCart'
 import { CartItem as TCartItem } from '@/store/cart/cartSlice'
 import Image from '@components/Image'
 import { Box, Group, NumberInput, Text } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { FC, useState } from 'react'
 
 interface cartItemProps {
@@ -12,6 +13,7 @@ interface cartItemProps {
 const CartItem: FC<cartItemProps> = ({ item }) => {
   const [quantity, setQuantity] = useState(item.quantity)
   const { updateItemQuantity, removeFromCart } = useCart()
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   const handleQuantityChange = (value: number) => {
     setQuantity(value)
@@ -26,13 +28,14 @@ const CartItem: FC<cartItemProps> = ({ item }) => {
   }
   return (
     <Group
+      noWrap
       sx={{
         justifyContent: 'space-between',
         padding: '1rem',
         borderBottom: '1px solid #ebebeb',
       }}
     >
-      <Group align='center' spacing={'lg'}>
+      <Group noWrap align='center' spacing={'lg'}>
         <Image
           src={item.thumbnail}
           alt={item.title}
@@ -40,7 +43,8 @@ const CartItem: FC<cartItemProps> = ({ item }) => {
           height={120}
           style={{
             objectFit: 'contain',
-            mixBlendMode: 'darken',
+            width: isMobile ? '5rem' : '10rem',
+            height: isMobile ? '5rem' : '10rem',
           }}
         />
         <Box>

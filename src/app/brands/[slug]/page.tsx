@@ -1,41 +1,32 @@
-import { listProduct } from '@/lib/products'
+import { listBrands, listProduct } from '@/lib/products'
 import { Brand } from '@/lib/products/type'
 import ProductCard from '@components/Product/ProductCard'
 import ProductList from '@components/Product/ProductsList'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-const brands = [
-  {
-    name: 'Nike',
-    slug: 'nike',
-  },
-  {
-    name: 'Adidas',
-    slug: 'adidas',
-  },
-  {
-    name: 'Converse',
-    slug: 'converse',
-  },
-  {
-    name: 'new balance',
-    slug: 'new_balance',
-  },
-].map((brand) => brand.slug)
+type Props = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const brands = await listBrands()
+  const brand = brands.find((brand) => brand.slug === params.slug)
+  return {
+    title: `${brand?.name} - Brands`,
+  }
+}
 
-async function page({
-  params,
-}: {
-  params: {
-    slug: string
-  }
-}) {
-  if (!brands.includes(params.slug)) {
-    notFound()
-  }
+async function page({ params }: Props) {
   const sneakers = await listProduct({
     brand: params.slug as Brand,
   })
+  if (!sneakers.length) {
+    const brands = await listBrands()
+    if (!brands.find((brand) => brand.slug === params.slug)) {
+      return notFound()
+    }
+  }
   return (
     <ProductList>
       {sneakers.map((sneaker) => (

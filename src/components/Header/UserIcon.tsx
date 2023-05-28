@@ -1,12 +1,17 @@
 'use client'
 import { useAuth, useUser } from '@clerk/nextjs'
 import { Avatar, Menu, Stack, Text, UnstyledButton } from '@mantine/core'
-import { IconLogout, IconSettings, IconShoppingBag } from '@tabler/icons-react'
+import {
+  IconLayoutDashboard,
+  IconLogout,
+  IconSettings,
+  IconShoppingBag,
+} from '@tabler/icons-react'
 import Link from 'next/link'
 
 function UserIcon() {
   const { user } = useUser()
-  const { signOut } = useAuth()
+  const { signOut, orgRole } = useAuth()
   if (!user) return null
   return (
     <Menu shadow='md' width={300}>
@@ -64,12 +69,22 @@ function UserIcon() {
             </Text>
           </Stack>
         </Menu.Item>
+        {orgRole === 'admin' && (
+          <Menu.Item
+            component={Link}
+            href={'/dashboard'}
+            icon={<IconLayoutDashboard size={14} />}
+          >
+            Dashboard
+          </Menu.Item>
+        )}
+
         <Menu.Item
           component={Link}
           icon={<IconSettings size={14} />}
           href={'/profile'}
         >
-          Profile
+          Profile Settings
         </Menu.Item>
         <Menu.Item
           component={Link}

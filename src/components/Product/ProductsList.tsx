@@ -8,8 +8,16 @@ interface ProductListProps {
 
 const ProductList: FC<ProductListProps> = ({ children }) => {
   return (
-    <Container>
-      <SimpleGrid cols={3}>{children}</SimpleGrid>
+    <Container size={'xl'}>
+      <SimpleGrid
+        breakpoints={[
+          { minWidth: 'sm', cols: 2 },
+          { minWidth: 'md', cols: 3 },
+          { minWidth: 'lg', cols: 4 },
+        ]}
+      >
+        {children}
+      </SimpleGrid>
     </Container>
   )
 }

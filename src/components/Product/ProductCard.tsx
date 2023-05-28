@@ -87,7 +87,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         <Card.Section>
           {product.variants?.length ? (
             <Carousel
+              withIndicators
               styles={{
+                indicator: {
+                  backgroundColor: theme.colors.gray[4],
+                },
                 control: {
                   transition: `all 200ms ${theme.transitionTimingFunction}`,
                   width: 30,

@@ -1,6 +1,10 @@
 import { SignIn } from '@clerk/nextjs'
 
-export default function Page() {
+export default function Page({
+  searchParams: { redirectUrl },
+}: {
+  searchParams: { redirectUrl?: string }
+}) {
   return (
     <SignIn
       appearance={{
@@ -16,9 +20,9 @@ export default function Page() {
       path='/sign-in'
       routing='path'
       signUpUrl='/sign-up'
-      afterSignInUrl={'/'}
-      afterSignUpUrl={'/'}
-      redirectUrl={'/'}
+      afterSignInUrl={redirectUrl || '/'}
+      afterSignUpUrl={redirectUrl || '/'}
+      redirectUrl={redirectUrl}
     />
   )
 }

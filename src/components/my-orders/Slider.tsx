@@ -19,6 +19,7 @@ interface SliderProps {
     }
   }
   loop?: boolean
+  withControls?: boolean
 }
 
 const Slider: FC<SliderProps> = ({
@@ -27,7 +28,7 @@ const Slider: FC<SliderProps> = ({
   slideSize = {
     mobile: {
       width: '100%',
-      height: '40vh',
+      height: '46vh',
     },
     desktop: {
       width: '30%',
@@ -35,6 +36,7 @@ const Slider: FC<SliderProps> = ({
     },
   },
   loop = true,
+  withControls,
 }) => {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [isDragging, setIsDragging] = React.useState(false)
@@ -42,7 +44,7 @@ const Slider: FC<SliderProps> = ({
   return (
     <Carousel
       withIndicators
-      withControls={!isMobile}
+      withControls={!isMobile || withControls}
       loop={loop}
       height={isMobile ? slideSize.mobile.height : slideSize.desktop.height}
       slideSize={isMobile ? slideSize.mobile.width : slideSize.desktop.width}
@@ -51,12 +53,7 @@ const Slider: FC<SliderProps> = ({
       m={'md'}
       p={'md'}
       align='start'
-      breakpoints={[
-        { maxWidth: 'xl', slideSize: '30%', slideGap: 0 },
-        { maxWidth: 'md', slideSize: '50%' },
-        { maxWidth: 'sm', slideSize: '100%', slideGap: 0 },
-      ]}
-      orientation={isMobile ? 'vertical' : orientation}
+      orientation={orientation || (isMobile ? 'vertical' : 'horizontal')}
       styles={{
         indicator: {
           backgroundColor: theme.colors.gray[4],

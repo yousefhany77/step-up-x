@@ -1,6 +1,8 @@
 import { listBrands } from '@/lib/products'
 import BrandsList from '@components/Brands/BrandsList'
 
+export const dynamic = 'force-static'
+
 const page = async ({}) => {
   const brands = await listBrands()
   return (

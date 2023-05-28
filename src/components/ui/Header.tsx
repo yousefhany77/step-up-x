@@ -31,7 +31,9 @@ function Header() {
           justifyContent: 'space-between',
         }}
       >
-        <Title order={3}>§</Title>
+        <Link href='/'>
+          <Title order={3}>§</Title>
+        </Link>
         <Group spacing={'xl'}>
           <Link href='/'>Home</Link>
           <Link href='/brands'>Brands</Link>

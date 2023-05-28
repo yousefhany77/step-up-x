@@ -1,5 +1,6 @@
 'use client'
 import { useCart } from '@/lib/hooks/useCart'
+import { useAuth } from '@clerk/nextjs'
 import {
   ActionIcon,
   Badge,
@@ -12,12 +13,50 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { IconShoppingCart } from '@tabler/icons-react'
+import { useRouter } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import CartItem from './cartItem'
 
 function Cart() {
   const [opened, { open, close }] = useDisclosure(false)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
+  const { userId } = useAuth()
+  const handleCheckout = async () => {
+    try {
+      if (!userId) {
+        close()
+        notifications.show({
+          title: 'Error',
+          message: 'You must be logged in to checkout',
+          color: 'red',
+        })
+        const currentUrl = window.location.href
+        return router.push(`/sign-in?redirectUrl=${currentUrl}`)
+      }
+      setLoading(true)
+      const res = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        body: JSON.stringify({ items }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const { url } = await res.json()
+      localStorage.removeItem('cart')
+      window.location.assign(url)
+    } catch (error) {
+      let message = 'Something went wrong'
+      if (error instanceof Error) {
+        message = error.message
+      }
+      notifications.show({
+        title: 'Error',
+        message: message,
+        color: 'red',
+      })
+    }
+  }
   const { items } = useCart()
 
   const total = useMemo(() => {
@@ -82,31 +121,7 @@ function Cart() {
         <Button
           loading={loading}
           disabled={loading || items.length === 0}
-          onClick={async () => {
-            try {
-              setLoading(true)
-              const res = await fetch('/api/stripe/checkout', {
-                method: 'POST',
-                body: JSON.stringify({ items }),
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              })
-              const { url } = await res.json()
-              localStorage.removeItem('cart')
-              window.location.assign(url)
-            } catch (error) {
-              let message = 'Something went wrong'
-              if (error instanceof Error) {
-                message = error.message
-              }
-              notifications.show({
-                title: 'Error',
-                message: message,
-                color: 'red',
-              })
-            }
-          }}
+          onClick={handleCheckout}
           fullWidth
           variant='light'
           size='md'

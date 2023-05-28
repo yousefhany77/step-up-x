@@ -44,6 +44,7 @@ const page = async ({ searchParams }: pageProps) => {
               size={0}
               thumbnail=''
               title='loading...'
+              url=''
             />
           }
         >
