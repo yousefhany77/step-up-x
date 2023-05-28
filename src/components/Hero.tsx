@@ -25,11 +25,10 @@ const Hero: FC<HeroProps> = ({ cta, heroImage, title }) => {
       }}
     >
       <Image
-        width={1200}
-        height={768}
+        fill
+        priority
         src={heroImage}
         alt={'step-up-x'}
-        sizes='(max-width: 768px) 100vw, 768px'
         style={{
           objectFit: 'cover',
           width: '100%',
