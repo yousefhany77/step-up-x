@@ -12,14 +12,14 @@ const BrandsList: FC<{
   }[]
 }> = ({ brands }) => {
   return (
-    <Container>
+    <Container size={'lg'}>
       <Title order={1} my={'md'} p={'md'}>
         Brands
       </Title>
       <SimpleGrid
-        cols={brands.length / 2}
+        cols={4}
         style={{
-          minHeight: '50vh',
+          minHeight: '20vh',
         }}
       >
         {brands.map((brand) => (
