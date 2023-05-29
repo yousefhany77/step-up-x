@@ -1,14 +1,19 @@
 .responsive-grid {
   grid-template-columns: repeat(12, 1fr);
+  display: grid;
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto !important;
+  gap: 1.5rem;
 }
 .responsive-grid-col-1 {
   grid-column: 1/9;
 }
 .responsive-grid-col-1 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .responsive-grid-col-2 {
   grid-column: 9/13;
 }

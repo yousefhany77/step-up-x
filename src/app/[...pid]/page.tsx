@@ -1,6 +1,5 @@
 import { getProductById } from '@/lib/products'
 import ProductDetails from '@components/Product/ProductDetails'
-import '@components/Product/productDetails.module.css'
 import { notFound } from 'next/navigation'
 interface PageProps {
   params: {

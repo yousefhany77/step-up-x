@@ -83,16 +83,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
           <View360 images={product.view_360} />
         </Modal>
       ) : null}
-      <div
-        className={styles['responsive-grid']}
-        style={{
-          maxWidth: '100%',
-          height: '100%',
-          margin: '0 auto !important',
-          display: 'grid',
-          gap: '1.5rem',
-        }}
-      >
+      <div className={styles['responsive-grid']}>
         <div
           key='Grid-col-1-product-Image'
           className={styles['responsive-grid-col-1']}
