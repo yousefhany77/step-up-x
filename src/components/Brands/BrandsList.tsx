@@ -17,7 +17,24 @@ const BrandsList: FC<{
         Brands
       </Title>
       <SimpleGrid
-        cols={4}
+        breakpoints={[
+          {
+            minWidth: 'xl',
+            cols: 4,
+          },
+          {
+            minWidth: 'lg',
+            cols: 3,
+          },
+          {
+            minWidth: 'md',
+            cols: 2,
+          },
+          {
+            minWidth: 'xs',
+            cols: 1,
+          },
+        ]}
         style={{
           minHeight: '20vh',
         }}

@@ -14,12 +14,12 @@ const enhanceContentfulProduct = (
   item: Entry<EntrySkeletonType, undefined, string>
 ) => {
   const { fields, sys } = item
-  const { images, thumbnail, view_360, variants, brand, title } =
+  const { images, thumbnail, view360, variants, brand, title } =
     fields as unknown as {
       title: string
       images: { fields: contentfulFile }[]
       thumbnail: { fields: contentfulFile }
-      view_360?: { fields: contentfulFile }[]
+      view360?: { fields: contentfulFile }[]
       variants?: {
         fields: Omit<contentfulProduct, 'variants'>
       }[]
@@ -40,7 +40,7 @@ const enhanceContentfulProduct = (
     pid: sys.id,
     thumbnail: `https:${thumbnail?.fields?.file?.url}`,
     images: images?.map((image) => `https:${image?.fields?.file?.url}`),
-    view_360: view_360?.map((image) => `https:${image?.fields?.file?.url}`),
+    view_360: view360?.map((image) => `https:${image?.fields?.file?.url}`),
     variants: variants?.map((variant) => {
       const { fields } = variant
       const variantImages = fields.images?.map(
