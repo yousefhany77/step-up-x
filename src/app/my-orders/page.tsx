@@ -80,6 +80,7 @@ async function page() {
                 <div
                   style={{
                     display: 'grid',
+                    gap: '1rem',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(25%, 300px))',
                   }}
                 >
