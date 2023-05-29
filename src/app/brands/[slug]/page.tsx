@@ -2,19 +2,11 @@ import { listBrands, listProduct } from '@/lib/products'
 import { Brand } from '@/lib/products/type'
 import ProductCard from '@components/Product/ProductCard'
 import ProductList from '@components/Product/ProductsList'
-import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 type Props = {
   params: { slug: string }
   searchParams: { [key: string]: string | string[] | undefined }
-}
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const brands = await listBrands()
-  const brand = brands.find((brand) => brand.slug === params.slug)
-  return {
-    title: `${brand?.name} - Brands`,
-  }
 }
 
 async function page({ params }: Props) {

@@ -12,10 +12,7 @@ export async function POST(req: Request) {
         shippingStatus: z.enum(['pending', 'shipped', 'delivered']),
       })
       .parse(body)
-    console.log(
-      '🚀 ~ file: route.ts:10 ~ POST ~ shippingStatus:',
-      shippingStatus
-    )
+
     const order = await prisma.orders.update({
       where: {
         id: orderId,

@@ -21,7 +21,6 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  console.log('🚀 ~ file: ProductCard.tsx:24 ~ product:', product)
   const [currentProduct, setCurrentProduct] = useState<Variant | Product>(
     product
   )
