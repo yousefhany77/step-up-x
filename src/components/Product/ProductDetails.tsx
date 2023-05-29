@@ -5,9 +5,9 @@ import Image from '@components/Image'
 import {
   Avatar,
   Badge,
-  Box,
   Button,
   Container,
+  Grid,
   Group,
   Modal,
   NumberInput,
@@ -15,7 +15,6 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core'
-import styles from './productDetails.module.css'
 
 import { useCart } from '@/lib/hooks/useCart'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
@@ -83,12 +82,13 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
           <View360 images={product.view_360} />
         </Modal>
       ) : null}
-      <div className={styles['responsive-grid']}>
-        <div
-          key='Grid-col-1-product-Image'
-          className={styles['responsive-grid-col-1']}
+      <Grid columns={13} m={0} h={'100%'} gutter={'xl'} grow>
+        <Grid.Col
+          md={8}
+          sm={12}
           style={{
             position: 'relative',
+            minHeight: '70vh',
             backgroundColor: 'white',
             borderRadius: theme.radius.lg,
             overflow: 'hidden',
@@ -116,13 +116,16 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
             src={currentProduct.images[0]}
             fill
             priority
+            style={{
+              objectFit: 'contain',
+            }}
             alt={product.title}
           />
-        </div>
-
-        <Box
-          key='Grid-col-2-product-Detail'
-          className={styles['responsive-grid-col-2']}
+        </Grid.Col>
+        <Grid.Col sm={12} md={'auto'}></Grid.Col>
+        <Grid.Col
+          md={4}
+          sm={12}
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -230,8 +233,8 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
               Add to Cart
             </Button>
           </Group>
-        </Box>
-      </div>
+        </Grid.Col>
+      </Grid>
     </Container>
   )
 }
