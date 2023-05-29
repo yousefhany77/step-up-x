@@ -13,7 +13,7 @@
   grid-column: 9/13;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .responsive-grid-col-1 {
     grid-column: span 12;
     min-height: 70vh;
