@@ -12,6 +12,7 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { FC, useEffect, useState } from 'react'
@@ -24,6 +25,8 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [currentProduct, setCurrentProduct] = useState<Variant | Product>(
     product
   )
+
+  const matches = useMediaQuery('(min-width: 56.25em)')
   const router = useRouter()
   const [index, setIndex] = useState(0)
   const url = encodeURI(`${product.title.replaceAll(' ', '-')}/${product.pid}`)
@@ -70,6 +73,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           style={{
             position: 'absolute',
             right: 20,
+            display: matches ? 'flex' : 'none',
           }}
         >
           360 view

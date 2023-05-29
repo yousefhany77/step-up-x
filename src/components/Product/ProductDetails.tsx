@@ -18,7 +18,7 @@ import {
 import styles from './productDetails.module.css'
 
 import { useCart } from '@/lib/hooks/useCart'
-import { useDisclosure } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { FC, useState } from 'react'
 import View360 from './View360'
@@ -33,8 +33,11 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
   const [opened, { open, close }] = useDisclosure(false)
   const [quantity, setQuantity] = useState(1)
   const [selectedSize, setSelectedSize] = useState<number>()
+  const matches = useMediaQuery('(min-width: 56.25em)')
+
   const { addToCart } = useCart()
   const theme = useMantineTheme()
+
   const handleAddToCart = () => {
     if (!selectedSize)
       return notifications.show({
@@ -106,6 +109,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product }) => {
               size='lg'
               sx={(theme) => ({
                 cursor: 'pointer',
+                display: matches ? 'block' : 'none',
                 position: 'absolute',
                 zIndex: 2,
                 transition: 'all ease-in-out 0.2s',
